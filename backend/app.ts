@@ -1,4 +1,4 @@
-const express = require("express");
+import  express , { Request, Response, NextFunction } from "express";
 const bodyParser = require("body-parser");
 
 const db = require('./db');
@@ -11,15 +11,15 @@ db.pool.query(`CREATE TABLE lists(
      id INTEGER AUTO_INCREMENT,
      value TEXT,
      PRIMARY KEY(id)
-)`,(err,result,fields)=>{
+)`,(err:any,result:string,fields:any)=>{
     console.log('results',result)
     if(err){
         console.log('error',err)
     }
 })
 
-app.get('/api/values',(req,res)=>{
-    db.pool.query('SELECT * FROM lists',(err,results,fields)=>{
+app.get('/api/values',(req:Request,res:Response)=>{
+    db.pool.query('SELECT * FROM lists',(err:any,results:string,fields:any)=>{
         if(err){
             return res.status(500).send(err)
         }else{
@@ -29,7 +29,7 @@ app.get('/api/values',(req,res)=>{
 })
 
 app.post('/api/value',(req,res)=>{
-    db.pool.query(`INSERT INTO lists (value) VALUEs("${req.body.value} ")`,(err,result,fields)=>{
+    db.pool.query(`INSERT INTO lists (value) VALUEs("${req.body.value} ")`,(err:any,result:any,fields:any)=>{
         if(err){
             return res.status(500).send(err)
         }else{
