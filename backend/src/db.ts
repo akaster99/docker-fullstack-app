@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+import mysql from "mysql";
 const pool = mysql.createPool({
     connectionLimit: 10,
     host: 'mysql',
@@ -7,4 +7,4 @@ const pool = mysql.createPool({
     database: 'myapp',
     // port:3306
 });
-exports.pool = pool; 
+export default pool; 

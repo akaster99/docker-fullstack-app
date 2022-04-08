@@ -1,13 +1,13 @@
 import  express , { Request, Response, NextFunction } from "express";
-const bodyParser = require("body-parser");
+import bodyParser from 'body-parser';
 
-const db = require('./db');
+import pool from './db';
 
 const app = express();
 
 app.use(bodyParser.json());
 
-db.pool.query(`CREATE TABLE lists(
+pool.query(`CREATE TABLE lists(
      id INTEGER AUTO_INCREMENT,
      value TEXT,
      PRIMARY KEY(id)
@@ -19,7 +19,7 @@ db.pool.query(`CREATE TABLE lists(
 })
 
 app.get('/api/values',(req:Request,res:Response)=>{
-    db.pool.query('SELECT * FROM lists',(err:any,results:string,fields:any)=>{
+    pool.query('SELECT * FROM lists',(err:any,results:string,fields:any)=>{
         if(err){
             return res.status(500).send(err)
         }else{
@@ -29,7 +29,7 @@ app.get('/api/values',(req:Request,res:Response)=>{
 })
 
 app.post('/api/value',(req,res)=>{
-    db.pool.query(`INSERT INTO lists (value) VALUEs("${req.body.value} ")`,(err:any,result:any,fields:any)=>{
+    pool.query(`INSERT INTO lists (value) VALUEs("${req.body.value} ")`,(err:any,result:any,fields:any)=>{
         if(err){
             return res.status(500).send(err)
         }else{
